@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', "PingFang SC", "Microsoft YaHei", sans-serif; /* 增加了中文字体支持 */
             background-color: #000;
             color: #ffffff;
             min-height: 100vh;
@@ -27,7 +27,7 @@
         /* --- 3张背景图轮播核心样式 --- */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 15, 25, 0.65); /* 深色遮罩，保证文字清晰 */
+            background: rgba(15, 15, 25, 0.7); /* 稍微加深遮罩，确保白色中文文字清晰 */
             z-index: -1;
             backdrop-filter: blur(8px);
         }
@@ -41,7 +41,7 @@
             animation: fadeLoop 18s infinite ease-in-out;
         }
 
-        /* 设置 3 张图片的链接和延迟时间 (已保留你的 Catbox 链接) */
+        /* 背景图链接 (保持不变) */
         .bg-slide:nth-child(1) {
             background-image: url('https://files.catbox.moe/dza4gr.jpg');
             animation-delay: 0s;
@@ -85,15 +85,17 @@
         }
 
         .name {
-            font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 12px;
             background: linear-gradient(to right, #d4a5ff, #ffdea8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .bio {
-            font-size: 0.95rem; color: rgba(255, 255, 255, 0.8);
-            line-height: 1.5; font-weight: 500;
+            font-size: 0.95rem; color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6; font-weight: 500;
+            letter-spacing: 0.5px;
+            padding: 0 10px; /* 防止文字贴边 */
         }
 
         /* --- 按钮样式 --- */
@@ -148,7 +150,11 @@
             <img src="https://files.catbox.moe/qu3mzn.png" alt="Kalos TV Logo" class="avatar">
             
             <h1 class="name">Kalos TV</h1>
-            <p class="bio">Streaming the Future of Entertainment<br>Music • Lifestyle • Culture</p>
+            <p class="bio">
+                Addictive short dramas with a little extra heat<br>
+                Drama, tension, and guilty pleasure moments<br>
+                Click to watch what everyone’s talking about
+            </p>
         </div>
 
         <div class="links">
@@ -168,10 +174,7 @@
                 <i class="fa-solid fa-layer-group"></i> Explore More
             </a>
             
-            <a href="https://short.rollershort.com/api/short/jump/695f4ce4c68d4" class="link-btn" target="_blank">
-                <i class="fa-brands fa-discord"></i> Join Community
-            </a>
-        </div>
+            </div>
 
         <div class="social-icons">
             <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
