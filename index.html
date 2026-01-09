@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalos TV | Links</title>
+    <title>Kalos TV | Official Links</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Global Reset --- */
+        /* --- 基础设置 --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
+        
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #000; /* 黑色底色，防止图片切换时闪烁 */
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -20,201 +21,149 @@
             align-items: center;
             padding: 20px;
             position: relative;
-            overflow-x: hidden; /* Prevent scrollbar flicker during animation */
+            overflow-x: hidden;
         }
 
-        /* --- Background Carousel & Overlay --- */
+        /* --- 3张背景图轮播核心样式 --- */
         .bg-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* Dark overlay to ensure text readability over images */
-            background: rgba(10, 10, 20, 0.6); 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 15, 25, 0.65); /* 深色遮罩，保证文字清晰 */
             z-index: -1;
-            backdrop-filter: blur(5px); /* Optional: blurs background images slightly */
+            backdrop-filter: blur(8px); /* 毛玻璃模糊效果 */
         }
 
         .bg-slide {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             z-index: -2;
-            animation: fadeLoop 16s infinite; /* 16s total loop for 2 images */
+            opacity: 0;
+            /* 18秒总周期 (3张图 x 6秒) */
+            animation: fadeLoop 18s infinite ease-in-out;
         }
 
-        /* Set your two background images here */
+        /* 设置 3 张图片的链接和延迟时间 */
+        
+        /* 第一张图：立即开始 */
         .bg-slide:nth-child(1) {
-            /* 【替换】背景图1：例如一张很酷的演播室或城市夜景照片 */
+            /* 替换这里为你的背景图 1 */
             background-image: url('https://files.catbox.moe/dza4gr.jpg');
             animation-delay: 0s;
         }
+        
+        /* 第二张图：延迟 6 秒 */
         .bg-slide:nth-child(2) {
-            /* 【替换】背景图2：另一张不同风格的照片 */
+            /* 替换这里为你的背景图 2 */
             background-image: url('https://files.catbox.moe/q9j113.jpg');
-            /* Starts fading in halfway through the loop */
-            animation-delay: 8s; 
-            opacity: 0; /* Start hidden */
+            animation-delay: 6s;
         }
 
-        /* CSS Fade Animation */
+        /* 第三张图：延迟 12 秒 */
+        .bg-slide:nth-child(3) {
+            /* 替换这里为你的背景图 3 */
+            background-image: url('https://files.catbox.moe/6lwpx9.jpg');
+            animation-delay: 12s;
+        }
+
+        /* 动画关键帧：控制淡入淡出 */
         @keyframes fadeLoop {
-            0% { opacity: 1; }
-            45% { opacity: 1; }
-            55% { opacity: 0; }
-            95% { opacity: 0; }
-            100% { opacity: 1; }
+            0% { opacity: 0; transform: scale(1); }
+            5% { opacity: 1; }  /* 快速淡入 */
+            33% { opacity: 1; } /* 保持显示 */
+            40% { opacity: 0; transform: scale(1.05); } /* 缓慢放大并淡出 */
+            100% { opacity: 0; }
         }
 
-
-        /* --- Main Container --- */
+        /* --- 内容容器 --- */
         .container {
-            width: 100%;
-            max-width: 480px; 
-            text-align: center;
-            padding: 20px 0 40px;
-            z-index: 1; /* Ensure content is above background */
+            width: 100%; max-width: 480px; 
+            text-align: center; padding: 20px 0 40px; z-index: 1;
         }
 
-        /* --- Profile Section --- */
-        .profile-section {
-            margin-bottom: 40px;
-        }
+        /* --- 个人资料区 --- */
+        .profile-section { margin-bottom: 35px; }
 
         .avatar {
-            width: 110px;
-            height: 110px;
-            /* Changed to rounded square to match your new logo icon style */
-            border-radius: 24%; 
+            width: 110px; height: 110px;
+            border-radius: 22px; /* 圆角矩形，适配你的 Logo */
             object-fit: cover;
-            /* Added a subtle glowing border using logo colors */
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 30px rgba(200, 100, 255, 0.3);
-            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(185, 103, 255, 0.25);
+            margin-bottom: 15px;
         }
 
         .name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-            /* Gradient Text Effect based on logo */
-            background: linear-gradient(to right, #e0c3fc, #ffdf9e);
+            font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;
+            /* 提取自 Logo 的渐变色 */
+            background: linear-gradient(to right, #d4a5ff, #ffdea8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .bio {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.6;
-            margin-bottom: 10px;
-            font-weight: 600;
+            font-size: 0.95rem; color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5; font-weight: 500;
         }
 
-        /* --- Link Buttons (UI Refined) --- */
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 18px; 
-        }
+        /* --- 按钮样式 --- */
+        .links { display: flex; flex-direction: column; gap: 16px; }
 
         .link-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            /* UI change: Dark glass style for standard buttons */
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.5); 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 18px 20px;
-            border-radius: 16px; /* Slightly less rounded than before for a tech feel */
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center;
+            text-decoration: none; color: #fff;
+            background: rgba(20, 20, 20, 0.6); /* 深色半透明 */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 20px; border-radius: 16px;
+            font-weight: 600; font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .link-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            background: rgba(0, 0, 0, 0.7);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            transform: translateY(-3px);
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .link-btn i {
-            margin-right: 14px;
-            font-size: 1.3rem;
-        }
+        .link-btn i { margin-right: 12px; font-size: 1.2rem; }
 
-        /* --- Highlight Button (Kalos Brand Colors) --- */
-        /* Extracts the purple/pink/yellow gradient from your logo */
+        /* 高亮按钮 (品牌色) */
         .link-btn.highlight {
-            background: linear-gradient(135deg, #b967ff 0%, #ff8a65 50%, #ffda7c 100%);
-            color: #000000; /* Dark text looks better on bright gradient */
-            border: none;
+            background: linear-gradient(135deg, #b967ff 0%, #ff8a65 60%, #ffda7c 100%);
+            color: #000; border: none;
             box-shadow: 0 8px 25px rgba(185, 103, 255, 0.4);
             font-weight: 800;
         }
         
-        .link-btn.highlight:hover {
-             box-shadow: 0 15px 35px rgba(185, 103, 255, 0.6);
-             filter: brightness(1.1);
-        }
+        .link-btn.highlight:hover { filter: brightness(1.1); transform: scale(1.02); }
 
-
-        /* --- Social Footer --- */
+        /* --- 底部社交栏 --- */
         .social-icons {
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-            display: inline-flex; /* Shrink wrap the container */
+            margin-top: 45px; display: flex; justify-content: center; gap: 25px;
         }
-
         .social-icon {
-            color: rgba(255,255,255,0.8);
-            font-size: 1.6rem;
-            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.6); font-size: 1.5rem; transition: 0.3s;
         }
-
-        .social-icon:hover {
-            color: #ffdf9e; /* Yellow hover color */
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        /* --- Copyright --- */
-        .footer {
-            margin-top: 35px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 600;
-        }
+        .social-icon:hover { color: #fff; transform: scale(1.2); }
+        .footer { margin-top: 30px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
     </style>
 </head>
 <body>
 
-    <div class="bg-slide"></div>
-    <div class="bg-slide"></div>
-    <div class="bg-overlay"></div>
-
+    <div class="bg-slide"></div> <div class="bg-slide"></div> <div class="bg-slide"></div> <div class="bg-overlay"></div>
 
     <div class="container">
         <div class="profile-section">
             <img src="https://files.catbox.moe/qu3mzn.png" alt="Kalos TV Logo" class="avatar">
             
             <h1 class="name">Kalos TV</h1>
-            <p class="bio">Your new favorite channel for<br>Entertainment, Music & Lifestyle.</p>
+            <p class="bio">Streaming the Future of Entertainment<br>Music • Lifestyle • Culture</p>
         </div>
 
         <div class="links">
             <a href="https://www.youtube.com" class="link-btn highlight" target="_blank">
-                <i class="fa-brands fa-youtube"></i> Watch Live Now
+                <i class="fa-brands fa-youtube"></i> Watch Live
             </a>
 
             <a href="#" class="link-btn" target="_blank">
@@ -225,19 +174,19 @@
                 <i class="fa-brands fa-tiktok"></i> Trending Clips
             </a>
 
-            <a href="https://twitter.com" class="link-btn" target="_blank">
-                <i class="fa-brands fa-x-twitter"></i> News & Updates
+            <a href="#" class="link-btn" target="_blank">
+                <i class="fa-solid fa-store"></i> Merch Store
             </a>
             
-            <a href="#" class="link-btn" target="_blank">
-                <i class="fa-solid fa-store"></i> Official Merch Shop
+            <a href="https://discord.com" class="link-btn" target="_blank">
+                <i class="fa-brands fa-discord"></i> Community
             </a>
         </div>
 
         <div class="social-icons">
-            <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="social-icon" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-            <a href="#" class="social-icon" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fa-regular fa-envelope"></i></a>
         </div>
 
         <div class="footer">
@@ -247,5 +196,3 @@
 
 </body>
 </html>
-
-
