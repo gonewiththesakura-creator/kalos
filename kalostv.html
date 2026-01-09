@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的链接主页 | My Links</title>
+    <title>Link in Bio | @YourName</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 全局样式重置 --- */
+        /* --- Global Reset --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,10 +16,11 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* 背景：你可以修改这里的渐变色 */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            /* Changed font to Inter for a more Western/Modern look */
+            font-family: 'Inter', sans-serif;
+            /* Background: Deep Blue/Purple Gradient */
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -26,108 +28,109 @@
             padding: 20px;
         }
 
-        /* --- 主容器 (限制最大宽度，模拟手机视图) --- */
+        /* --- Main Container --- */
         .container {
             width: 100%;
-            max-width: 480px; /* 限制在手机宽度，在大屏幕上也好看 */
+            max-width: 480px; 
             text-align: center;
             padding-bottom: 40px;
         }
 
-        /* --- 个人资料区域 --- */
+        /* --- Profile Section --- */
         .profile-section {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .avatar {
-            width: 96px;
-            height: 96px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            margin-bottom: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .name {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
 
         .bio {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+            margin-bottom: 10px;
         }
 
-        /* --- 链接按钮区域 --- */
+        /* --- Link Buttons --- */
         .links {
             display: flex;
             flex-direction: column;
-            gap: 16px; /* 按钮之间的间距 */
+            gap: 16px; 
         }
 
         .link-btn {
-            display: flex; /* 让文字和图标垂直居中 */
-            justify-content: center;
+            display: flex;
+            justify-content: center; /* Center content */
             align-items: center;
             text-decoration: none;
-            color: #333;
-            background: rgba(255, 255, 255, 0.9); /* 半透明白色背景 */
-            padding: 16px 20px;
-            border-radius: 30px; /* 圆角按钮 */
+            color: #1a1a1a;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 18px 20px;
+            border-radius: 50px; /* Fully rounded pills */
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             position: relative;
         }
 
-        /* 按钮悬停/点击效果 */
-        .link-btn:hover, .link-btn:active {
-            transform: scale(1.02); /* 轻微放大 */
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
             background: #ffffff;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
 
-        /* 如果需要特定按钮有不同颜色（例如主要行动按钮） */
+        /* Highlight Button Style (e.g., for Main Shop) */
         .link-btn.highlight {
-            background-color: #ff4757;
-            color: white;
-        }
-        
-        /* 按钮内的小图标样式 */
-        .link-btn i {
-            margin-right: 10px;
-            font-size: 1.1rem;
+            background-color: #000000; /* Black button */
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* --- 底部社交图标 --- */
+        /* Icon spacing */
+        .link-btn i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        /* --- Social Footer --- */
         .social-icons {
-            margin-top: 40px;
+            margin-top: 45px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .social-icon {
-            color: white;
-            font-size: 1.5rem;
-            opacity: 0.8;
-            transition: opacity 0.3s;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.6rem;
+            transition: all 0.3s;
         }
 
         .social-icon:hover {
-            opacity: 1;
+            color: #fff;
+            transform: scale(1.1);
         }
 
-        /* --- 底部版权 --- */
+        /* --- Copyright --- */
         .footer {
-            margin-top: 30px;
+            margin-top: 35px;
             font-size: 0.75rem;
-            opacity: 0.6;
+            color: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -135,41 +138,41 @@
 
     <div class="container">
         <div class="profile-section">
-            <img src="https://ui-avatars.com/api/?name=User&background=random&size=128" alt="头像" class="avatar">
-            <h1 class="name">@你的名字</h1>
-            <p class="bio">在这里写一句简短的个人简介<br>分享生活 | 科技 | 摄影</p>
+            <img src="https://ui-avatars.com/api/?name=Cosmo&background=0D8ABC&color=fff&size=128" alt="Profile Picture" class="avatar">
+            <h1 class="name">@CosmoBrand</h1>
+            <p class="bio">Digital Creator | Aesthetics | Lifestyle<br>Bringing you the best vibes from NYC 🇺🇸</p>
         </div>
 
         <div class="links">
-            <a href="https://www.your-website.com" class="link-btn highlight" target="_blank">
-                <i class="fa-solid fa-star"></i> 访问我的官方网站
+            <a href="https://www.shopify.com" class="link-btn highlight" target="_blank">
+                <i class="fa-solid fa-shop"></i> Shop New Arrivals
             </a>
 
-            <a href="https://weibo.com" class="link-btn" target="_blank">
-                <i class="fa-brands fa-weibo"></i> 关注我的微博
+            <a href="https://www.youtube.com" class="link-btn" target="_blank">
+                <i class="fa-brands fa-youtube"></i> Watch Latest Vlog
             </a>
 
-            <a href="#" class="link-btn" target="_blank">
-                <i class="fa-brands fa-weixin"></i> 加我微信 (WeChat)
+            <a href="https://www.tiktok.com" class="link-btn" target="_blank">
+                <i class="fa-brands fa-tiktok"></i> Viral TikToks
             </a>
 
-            <a href="https://www.bilibili.com" class="link-btn" target="_blank">
-                <i class="fa-brands fa-bilibili"></i> Bilibili 频道
+            <a href="https://twitter.com" class="link-btn" target="_blank">
+                <i class="fa-brands fa-x-twitter"></i> Follow on X
             </a>
             
-            <a href="https://www.youtube.com" class="link-btn" target="_blank">
-                <i class="fa-brands fa-youtube"></i> YouTube 频道
+            <a href="https://discord.com" class="link-btn" target="_blank">
+                <i class="fa-brands fa-discord"></i> Join Community
             </a>
         </div>
 
         <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="#" class="social-icon"><i class="fa-regular fa-envelope"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="social-icon" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
         </div>
 
         <div class="footer">
-            <p>© 2024 Your Name. All Rights Reserved.</p>
+            <p>© 2026 Cosmo Brand. All Rights Reserved.</p>
         </div>
     </div>
 
