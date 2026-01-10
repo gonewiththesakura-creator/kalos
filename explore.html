@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explore More | Kalos TV</title>
     <link rel="icon" type="image/png" href="https://files.catbox.moe/qu3mzn.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://files.catbox.moe" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         /* --- 全局样式 --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Inter', sans-serif;
@@ -19,6 +27,7 @@
             color: #ffffff;
             min-height: 100vh;
             padding: 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* --- 顶部导航栏 --- */
@@ -39,7 +48,7 @@
             transition: 0.3s;
             font-weight: 600;
         }
-        .back-btn:hover { color: #00f260; transform: translateX(-5px); }
+        .back-btn:active { opacity: 0.7; transform: scale(0.95); }
         .back-btn i { margin-right: 8px; }
 
         .page-title {
@@ -49,6 +58,8 @@
             background: linear-gradient(to right, #00f260, #0575e6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            /* 回退颜色 */
+            color: #00f260; 
         }
         
         .spacer { width: 40px; }
@@ -64,23 +75,30 @@
         }
 
         .video-card {
+            display: block; 
             position: relative;
             width: 100%;
+            /* 4. 宽高比占位 */
             aspect-ratio: 3 / 4; 
             border-radius: 16px;
             overflow: hidden;
-            background: #1a2a33;
+            background: #1a2a33; /* 卡片未加载时的深青色底色 */
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            cursor: pointer;
-            transition: transform 0.2s;
+            text-decoration: none;
             /* 边框：青色微光 */
             border: 1px solid rgba(0, 242, 96, 0.15);
+            will-change: transform;
         }
 
-        .video-card:hover {
-            transform: scale(1.02);
+        .video-card:active {
+            transform: scale(0.98);
             border-color: rgba(0, 242, 96, 0.5);
-            box-shadow: 0 0 20px rgba(0, 242, 96, 0.2);
+            box-shadow: 0 0 15px rgba(0, 242, 96, 0.2);
+        }
+
+        @media (hover: hover) {
+            .video-card:hover { transform: scale(1.02); border-color: rgba(0, 242, 96, 0.5); box-shadow: 0 0 20px rgba(0, 242, 96, 0.2); }
+            .video-card:hover .video-thumb { opacity: 1; }
         }
 
         .video-thumb {
@@ -88,11 +106,10 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.85; 
-            transition: 0.3s;
+            transition: opacity 0.3s ease;
+            background-color: #152026; 
         }
         
-        .video-card:hover .video-thumb { opacity: 1; }
-
         /* 播放按钮：青色/薄荷色风格 */
         .play-overlay {
             position: absolute;
@@ -101,12 +118,14 @@
             width: 45px; height: 45px;
             background: rgba(0, 242, 96, 0.2); /* 青绿色半透明 */
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 0 15px rgba(0, 242, 96, 0.3);
+            pointer-events: none;
         }
 
         .play-overlay i { font-size: 16px; color: #fff; margin-left: 3px; }
@@ -117,6 +136,7 @@
             bottom: 0; left: 0; width: 100%;
             padding: 40px 10px 12px;
             background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
         }
 
         .card-title {
@@ -153,7 +173,7 @@
     <div class="grid-container">
 
         <a href="https://short.rollershort.com/api/short/jump/6960d4f83938c" class="video-card">
-            <img src="https://files.catbox.moe/4fjwbk.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/4fjwbk.jpg" class="video-thumb" alt="Messages from the Future Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Messages from the Future</div>
@@ -162,7 +182,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d5052a023" class="video-card">
-            <img src="https://files.catbox.moe/larhai.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/larhai.jpg" class="video-thumb" alt="Bloodline Betrayal Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Bloodline Betrayal</div>
@@ -171,7 +191,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d5184289d" class="video-card">
-            <img src="https://files.catbox.moe/4s4v6i.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/4s4v6i.jpg" class="video-thumb" alt="My Boss is a Cyber-Daddy Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">My Boss is a Cyber-Daddy</div>
@@ -180,7 +200,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d52e19386" class="video-card">
-            <img src="https://files.catbox.moe/bpumpl.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/bpumpl.jpg" class="video-thumb" alt="A Stormy Night in 1980 Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">A Stormy Night in 1980</div>
@@ -189,7 +209,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d53b9c330" class="video-card">
-            <img src="https://files.catbox.moe/2q72wq.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/2q72wq.jpg" class="video-thumb" alt="Hades' Seven Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Hades' Seven</div>
@@ -198,7 +218,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d557f07a4" class="video-card">
-            <img src="https://files.catbox.moe/xqgau1.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/xqgau1.jpg" class="video-thumb" alt="The Fog Delivered Him Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">The Fog Delivered Him</div>
@@ -210,8 +230,3 @@
 
 </body>
 </html>
-
-
-
-
-
