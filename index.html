@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalos TV | Official Links</title>
     <link rel="icon" type="image/png" href="https://files.catbox.moe/qu3mzn.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://files.catbox.moe" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         /* --- 基础设置 --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Inter', "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -23,14 +31,18 @@
             padding: 20px;
             position: relative;
             overflow-x: hidden;
+            /* 移动端字体平滑 */
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 3张背景图轮播核心样式 --- */
+        /* --- 背景优化 --- */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 15, 25, 0.7); 
             z-index: -1;
+            /* 性能优化：backdrop-filter 在低端安卓机可能卡顿，保留但需注意 */
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .bg-slide {
@@ -39,26 +51,27 @@
             background-position: center;
             z-index: -2;
             opacity: 0;
+            /* 4. GPU 硬件加速提示 */
+            will-change: opacity, transform;
             animation: fadeLoop 18s infinite ease-in-out;
         }
 
-        /* 背景图链接 */
+        /* 只在CSS中加载第一张图，后两张通过JS加载 */
         .bg-slide:nth-child(1) {
             background-image: url('https://files.catbox.moe/dza4gr.jpg');
             animation-delay: 0s;
         }
         
         .bg-slide:nth-child(2) {
-            background-image: url('https://files.catbox.moe/q9j113.jpg');
+            /* 占位，JS注入 */
             animation-delay: 6s;
         }
 
         .bg-slide:nth-child(3) {
-            background-image: url('https://files.catbox.moe/6lwpx9.jpg');
+            /* 占位，JS注入 */
             animation-delay: 12s;
         }
 
-        /* 动画关键帧 */
         @keyframes fadeLoop {
             0% { opacity: 0; transform: scale(1); }
             5% { opacity: 1; }  
@@ -73,7 +86,6 @@
             text-align: center; padding: 20px 0 40px; z-index: 1;
         }
 
-        /* --- 个人资料区 --- */
         .profile-section { margin-bottom: 35px; }
 
         .avatar {
@@ -83,6 +95,8 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 30px rgba(185, 103, 255, 0.25);
             margin-bottom: 15px;
+            /* 防止图片加载时的布局抖动 */
+            background-color: #2a2a2a; 
         }
 
         .name {
@@ -90,6 +104,8 @@
             background: linear-gradient(to right, #d4a5ff, #ffdea8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            /* 确保渐变文字在老设备回退 */
+            color: #d4a5ff;
         }
 
         .bio {
@@ -99,7 +115,6 @@
             padding: 0 10px; 
         }
 
-        /* --- 按钮样式 --- */
         .links { display: flex; flex-direction: column; gap: 16px; }
 
         .link-btn {
@@ -107,11 +122,18 @@
             text-decoration: none; color: #fff;
             background: rgba(30, 30, 30, 0.6); 
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 18px 20px; border-radius: 16px;
             font-weight: 600; font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, background 0.2s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            /* 移动端触摸反馈优化 */
+            touch-action: manipulation;
+        }
+
+        .link-btn:active {
+            transform: scale(0.98);
         }
 
         .link-btn:hover {
@@ -122,26 +144,26 @@
 
         .link-btn i { margin-right: 12px; font-size: 1.2rem; }
 
-        /* 高亮按钮样式 */
         .link-btn.highlight {
             background: linear-gradient(135deg, #b967ff 0%, #ff8a65 60%, #ffda7c 100%);
             color: #000; border: none;
             box-shadow: 0 8px 25px rgba(185, 103, 255, 0.4);
             font-weight: 800;
         }
-        .link-btn.highlight:hover { filter: brightness(1.1); transform: scale(1.02); }
-
-        /* --- 底部版权 --- */
+        
         .footer { margin-top: 50px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
     </style>
 </head>
 <body>
 
-    <div class="bg-slide"></div> <div class="bg-slide"></div> <div class="bg-slide"></div> <div class="bg-overlay"></div>
+    <div class="bg-slide"></div> 
+    <div class="bg-slide" id="bg2"></div> 
+    <div class="bg-slide" id="bg3"></div> 
+    <div class="bg-overlay"></div>
 
     <div class="container">
         <div class="profile-section">
-            <img src="https://files.catbox.moe/qu3mzn.png" alt="Kalos TV Logo" class="avatar">
+            <img src="https://files.catbox.moe/qu3mzn.png" alt="Kalos TV Logo" class="avatar" fetchpriority="high" width="110" height="110">
             
             <h1 class="name">Kalos TV</h1>
             <p class="bio">
@@ -174,8 +196,19 @@
         </div>
     </div>
 
+    <script>
+        // --- 6. 延迟加载背景图脚本 ---
+        // 等待页面主要内容加载完毕后，再去请求第2、3张背景图
+        // 这样可以让用户秒开页面，不用等待几MB的背景图下载
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('bg2').style.backgroundImage = "url('https://files.catbox.moe/q9j113.jpg')";
+            }, 3000); // 延迟3秒加载第二张
+
+            setTimeout(() => {
+                document.getElementById('bg3').style.backgroundImage = "url('https://files.catbox.moe/6lwpx9.jpg')";
+            }, 6000); // 延迟6秒加载第三张
+        });
+    </script>
 </body>
 </html>
-
-
-
