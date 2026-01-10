@@ -31,7 +31,6 @@
             padding: 20px;
             position: relative;
             overflow-x: hidden;
-            /* 移动端字体平滑 */
             -webkit-font-smoothing: antialiased;
         }
 
@@ -40,7 +39,6 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 15, 25, 0.7); 
             z-index: -1;
-            /* 性能优化：backdrop-filter 在低端安卓机可能卡顿，保留但需注意 */
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
@@ -51,24 +49,20 @@
             background-position: center;
             z-index: -2;
             opacity: 0;
-            /* 4. GPU 硬件加速提示 */
             will-change: opacity, transform;
             animation: fadeLoop 18s infinite ease-in-out;
         }
 
-        /* 只在CSS中加载第一张图，后两张通过JS加载 */
         .bg-slide:nth-child(1) {
             background-image: url('https://files.catbox.moe/dza4gr.jpg');
             animation-delay: 0s;
         }
         
         .bg-slide:nth-child(2) {
-            /* 占位，JS注入 */
             animation-delay: 6s;
         }
 
         .bg-slide:nth-child(3) {
-            /* 占位，JS注入 */
             animation-delay: 12s;
         }
 
@@ -95,7 +89,6 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 30px rgba(185, 103, 255, 0.25);
             margin-bottom: 15px;
-            /* 防止图片加载时的布局抖动 */
             background-color: #2a2a2a; 
         }
 
@@ -104,7 +97,6 @@
             background: linear-gradient(to right, #d4a5ff, #ffdea8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            /* 确保渐变文字在老设备回退 */
             color: #d4a5ff;
         }
 
@@ -128,7 +120,6 @@
             font-weight: 600; font-size: 1rem;
             transition: transform 0.2s ease, background 0.2s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            /* 移动端触摸反馈优化 */
             touch-action: manipulation;
         }
 
@@ -151,7 +142,17 @@
             font-weight: 800;
         }
         
-        .footer { margin-top: 50px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
+        /* 新增：底部免费观看提示文字样式 */
+        .free-watch-text {
+            margin-top: 35px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffdea8; /* 淡金色，呼应标题 */
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .footer { margin-top: 15px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); }
     </style>
 </head>
 <body>
@@ -191,23 +192,23 @@
             </a>
         </div>
 
+        <p class="free-watch-text">Watch more exciting short dramas for free</p>
+
         <div class="footer">
             <p>© 2026 Kalos TV Network. All Rights Reserved.</p>
         </div>
     </div>
 
     <script>
-        // --- 6. 延迟加载背景图脚本 ---
-        // 等待页面主要内容加载完毕后，再去请求第2、3张背景图
-        // 这样可以让用户秒开页面，不用等待几MB的背景图下载
+        // 延迟加载背景图脚本
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('bg2').style.backgroundImage = "url('https://files.catbox.moe/q9j113.jpg')";
-            }, 3000); // 延迟3秒加载第二张
+            }, 3000); 
 
             setTimeout(() => {
                 document.getElementById('bg3').style.backgroundImage = "url('https://files.catbox.moe/6lwpx9.jpg')";
-            }, 6000); // 延迟6秒加载第三张
+            }, 6000); 
         });
     </script>
 </body>
