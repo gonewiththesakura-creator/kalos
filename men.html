@@ -5,20 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Men's Zone | Kalos TV</title>
     <link rel="icon" type="image/png" href="https://files.catbox.moe/qu3mzn.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://files.catbox.moe" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         /* --- 全局样式 --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Inter', sans-serif;
-            /* 背景：深邃的黑红渐变，更具战斗感和荷尔蒙感 */
-            background: linear-gradient(180deg, #1a0505 0%, #000000 100%);
+            /* 背景：深蓝到黑色的硬朗渐变 */
+            background: linear-gradient(180deg, #0f2027 0%, #203a43 50%, #000000 100%);
             color: #ffffff;
             min-height: 100vh;
             padding: 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* --- 顶部导航栏 --- */
@@ -39,16 +48,17 @@
             transition: 0.3s;
             font-weight: 600;
         }
-        .back-btn:hover { color: #ff4d4d; transform: translateX(-5px); }
+        .back-btn:active { opacity: 0.7; transform: scale(0.95); }
         .back-btn i { margin-right: 8px; }
 
         .page-title {
             font-size: 1.2rem;
             font-weight: 800;
-            /* 标题：炽热的红橙渐变 */
-            background: linear-gradient(to right, #ff4d4d, #ffb347);
+            /* 标题：冰蓝到金色的渐变，体现力量感 */
+            background: linear-gradient(to right, #4facfe, #00f2fe 50%, #ffd700 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: #4facfe;
         }
         
         .spacer { width: 40px; }
@@ -64,23 +74,28 @@
         }
 
         .video-card {
+            display: block; 
             position: relative;
             width: 100%;
             aspect-ratio: 3 / 4; 
             border-radius: 16px;
             overflow: hidden;
-            background: #111;
+            background: #1a1a1a;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            cursor: pointer;
-            transition: transform 0.2s;
-            /* 边框：微弱的红色光晕 */
-            border: 1px solid rgba(255, 77, 77, 0.15);
+            text-decoration: none;
+            /* 边框：微弱的蓝色光泽 */
+            border: 1px solid rgba(79, 172, 254, 0.2);
+            will-change: transform;
         }
 
-        .video-card:hover {
-            transform: scale(1.02);
-            border-color: rgba(255, 77, 77, 0.5);
-            box-shadow: 0 0 20px rgba(255, 77, 77, 0.2);
+        .video-card:active {
+            transform: scale(0.98);
+            border-color: rgba(79, 172, 254, 0.6);
+        }
+
+        @media (hover: hover) {
+            .video-card:hover { transform: scale(1.02); border-color: rgba(79, 172, 254, 0.6); }
+            .video-card:hover .video-thumb { opacity: 1; }
         }
 
         .video-thumb {
@@ -88,25 +103,27 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.85; 
-            transition: 0.3s;
+            transition: opacity 0.3s ease;
+            background-color: #0f161c; 
         }
         
-        .video-card:hover .video-thumb { opacity: 1; }
-
-        /* 播放按钮：红色风格 */
+        /* 播放按钮 */
         .play-overlay {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 45px; height: 45px;
-            background: rgba(255, 77, 77, 0.2); /* 红色半透明背景 */
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+            border: 1px solid rgba(255,255,255,0.4);
+            /* 蓝色发光 */
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.3);
+            pointer-events: none;
         }
 
         .play-overlay i { font-size: 16px; color: #fff; margin-left: 3px; }
@@ -116,7 +133,8 @@
             position: absolute;
             bottom: 0; left: 0; width: 100%;
             padding: 40px 10px 12px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
         }
 
         .card-title {
@@ -131,7 +149,8 @@
 
         .card-tag {
             font-size: 0.7rem;
-            color: #ff8c8c; /* 浅红色文字 */
+            /* 金色文字 */
+            color: #ffd700; 
             display: flex;
             align-items: center;
             font-weight: 600;
@@ -152,57 +171,57 @@
 
     <div class="grid-container">
 
-        <a href="https://short.rollershort.com/api/short/jump/6960d4910b8a5" class="video-card">
-            <img src="https://files.catbox.moe/u4rvt1.jpg" class="video-thumb" alt="Cover">
+        <a href="https://short.rollershort.com/api/short/jump/6960d370a3cdc" class="video-card">
+            <img src="https://files.catbox.moe/0z1wcd.jpg" class="video-thumb" alt="The Dragon King Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
-                <div class="card-title">I'm Immortal, But Useless</div>
-                <div class="card-tag"><i class="fa-solid fa-scroll"></i> Fantasy System</div>
+                <div class="card-title">The Dragon King</div>
+                <div class="card-tag"><i class="fa-solid fa-dragon"></i> Action & Power</div>
             </div>
         </a>
 
-        <a href="https://short.rollershort.com/api/short/jump/6960d49dde91d" class="video-card">
-            <img src="https://files.catbox.moe/mty7j5.jpg" class="video-thumb" alt="Cover">
+        <a href="https://short.rollershort.com/api/short/jump/6960d399ed359" class="video-card">
+            <img src="https://files.catbox.moe/egnyez.jpg" class="video-thumb" alt="Rise of the Tycoon Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
-                <div class="card-title">The Useless Prodigy</div>
-                <div class="card-tag"><i class="fa-solid fa-arrow-trend-up"></i> Zero to Hero</div>
+                <div class="card-title">Rise of the Tycoon</div>
+                <div class="card-tag"><i class="fa-solid fa-building"></i> Business War</div>
             </div>
         </a>
 
-        <a href="https://short.rollershort.com/api/short/jump/6960d4b174e16" class="video-card">
-            <img src="https://files.catbox.moe/h3bh3r.jpg" class="video-thumb" alt="Cover">
+        <a href="https://short.rollershort.com/api/short/jump/6960d3da83036" class="video-card">
+            <img src="https://files.catbox.moe/mxffjx.jpg" class="video-thumb" alt="God of War Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
-                <div class="card-title">Legend Broke Free</div>
-                <div class="card-tag"><i class="fa-solid fa-fist-raised"></i> God of War</div>
+                <div class="card-title">God of War Returns</div>
+                <div class="card-tag"><i class="fa-solid fa-fist-raised"></i> Revenge</div>
             </div>
         </a>
 
-        <a href="https://short.rollershort.com/api/short/jump/6960d4c2689ee" class="video-card">
-            <img src="https://files.catbox.moe/2dg4ez.jpg" class="video-thumb" alt="Cover">
+        <a href="https://short.rollershort.com/api/short/jump/6960d3f289ef9" class="video-card">
+            <img src="https://files.catbox.moe/csm99i.jpg" class="video-thumb" alt="Underworld Law Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
-                <div class="card-title">Veilbreaker's Reign</div>
-                <div class="card-tag"><i class="fa-solid fa-dragon"></i> Power Awakening</div>
+                <div class="card-title">Underworld Law</div>
+                <div class="card-tag"><i class="fa-solid fa-skull"></i> Thriller</div>
             </div>
         </a>
 
-        <a href="https://short.rollershort.com/api/short/jump/6960d4d6b33a7" class="video-card">
-            <img src="https://files.catbox.moe/64kpsc.png" class="video-thumb" alt="Cover">
+        <a href="https://short.rollershort.com/api/short/jump/6960d3b2a92e2" class="video-card">
+            <img src="https://files.catbox.moe/uka922.jpg" class="video-thumb" alt="Son in Law Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
-                <div class="card-title">Final Haven</div>
-                <div class="card-tag"><i class="fa-solid fa-biohazard"></i> Doomsday Survival</div>
+                <div class="card-title">The Hidden Billionaire</div>
+                <div class="card-tag"><i class="fa-solid fa-money-bill-wave"></i> Face-slapping</div>
             </div>
         </a>
 
-        <a href="https://short.rollershort.com/api/short/jump/6960d4ee62263" class="video-card">
-            <img src="https://files.catbox.moe/6ily3s.jpg" class="video-thumb" alt="Cover">
+        <a href="https://short.rollershort.com/api/short/jump/6960d3c9ab276" class="video-card">
+            <img src="https://files.catbox.moe/wzmyeg.png" class="video-thumb" alt="Wolf Pack Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
-                <div class="card-title">Savior Pilot (Age 9)</div>
-                <div class="card-tag"><i class="fa-solid fa-jet-fighter"></i> Mecha Prodigy</div>
+                <div class="card-title">Alpha's Choice</div>
+                <div class="card-tag"><i class="fa-solid fa-moon"></i> Werewolf</div>
             </div>
         </a>
 
@@ -210,6 +229,3 @@
 
 </body>
 </html>
-
-
-
