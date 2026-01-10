@@ -5,20 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok Viral Hits | Kalos TV</title>
     <link rel="icon" type="image/png" href="https://files.catbox.moe/qu3mzn.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://files.catbox.moe" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         /* --- 全局样式 --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Inter', sans-serif;
-            /* 延续主页深色风格，使用更沉浸的黑蓝渐变 */
             background: linear-gradient(180deg, #1a1a2e 0%, #000000 100%);
             color: #ffffff;
             min-height: 100vh;
             padding: 20px;
+            /* 优化移动端滚动体验 */
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* --- 顶部导航栏 --- */
@@ -39,17 +49,18 @@
             transition: 0.3s;
             font-weight: 600;
         }
-        .back-btn:hover { color: #fff; transform: translateX(-5px); }
+        .back-btn:active { transform: scale(0.95); opacity: 0.7; }
         .back-btn i { margin-right: 8px; }
 
         .page-title {
             font-size: 1.2rem;
             font-weight: 800;
             letter-spacing: -0.5px;
-            /* 品牌渐变色文字 */
             background: linear-gradient(to right, #d4a5ff, #ffdea8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            /* 回退颜色 */
+            color: #d4a5ff; 
         }
         
         .spacer { width: 40px; }
@@ -65,20 +76,24 @@
         }
 
         .video-card {
+            display: block; /* 修复a标签布局 */
             position: relative;
             width: 100%;
-            aspect-ratio: 3 / 4; /* 竖屏封面比例 */
+            /* 4. 强制宽高比，防止图片加载时布局跳动 */
+            aspect-ratio: 3 / 4; 
             border-radius: 16px;
             overflow: hidden;
             background: #222;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: transform 0.2s;
+            text-decoration: none;
+            /* 性能优化：为动画准备 */
+            will-change: transform;
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .video-card:hover {
-            transform: scale(1.02);
+        /* 移动端点击反馈 */
+        .video-card:active {
+            transform: scale(0.98);
             border-color: rgba(255,255,255,0.4);
         }
 
@@ -87,10 +102,16 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.85; 
-            transition: 0.3s;
+            transition: opacity 0.3s ease;
+            /* 增加背景色，图片加载出来前不至于全黑 */
+            background-color: #2a2a2a; 
         }
         
-        .video-card:hover .video-thumb { opacity: 1; }
+        /* 触摸设备不建议用 hover 处理透明度，保持常亮或 active 处理 */
+        @media (hover: hover) {
+            .video-card:hover { transform: scale(1.02); border-color: rgba(255,255,255,0.4); }
+            .video-card:hover .video-thumb { opacity: 1; }
+        }
 
         /* 播放按钮 */
         .play-overlay {
@@ -100,11 +121,13 @@
             width: 40px; height: 40px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid rgba(255,255,255,0.5);
+            pointer-events: none; /* 防止点击事件被遮挡 */
         }
 
         .play-overlay i { font-size: 14px; color: #fff; margin-left: 2px; }
@@ -114,8 +137,8 @@
             position: absolute;
             bottom: 0; left: 0; width: 100%;
             padding: 40px 10px 12px;
-            /* 底部黑色渐变，确保文字清晰 */
             background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
         }
 
         .card-title {
@@ -125,7 +148,7 @@
             margin-bottom: 5px;
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis; /* 文字超长自动省略 */
+            text-overflow: ellipsis; 
         }
 
         .card-stats {
@@ -134,7 +157,7 @@
             display: flex;
             align-items: center;
         }
-        .card-stats i { margin-right: 4px; color: #ff4d4d; /* 红色火焰图标 */ }
+        .card-stats i { margin-right: 4px; color: #ff4d4d; }
 
     </style>
 </head>
@@ -151,7 +174,7 @@
     <div class="grid-container">
 
         <a href="https://short.rollershort.com/api/short/jump/6960d370a3cdc" class="video-card">
-            <img src="https://files.catbox.moe/0z1wcd.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/0z1wcd.jpg" class="video-thumb" alt="My Billionaire Father Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">My Billionaire Father</div>
@@ -160,7 +183,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d399ed359" class="video-card">
-            <img src="https://files.catbox.moe/egnyez.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/egnyez.jpg" class="video-thumb" alt="Fired and Furious Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Fired and Furious</div>
@@ -169,7 +192,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d3b2a92e2" class="video-card">
-            <img src="https://files.catbox.moe/uka922.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/uka922.jpg" class="video-thumb" alt="True Heiress Strikes Back Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">True Heiress Strikes Back</div>
@@ -178,7 +201,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d3c9ab276" class="video-card">
-            <img src="https://files.catbox.moe/wzmyeg.png" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/wzmyeg.png" class="video-thumb" alt="Cheating Wife Loves You Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Cheating Wife Loves You</div>
@@ -187,7 +210,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d3da83036" class="video-card">
-            <img src="https://files.catbox.moe/mxffjx.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/mxffjx.jpg" class="video-thumb" alt="Student's Single Daddy Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Student's Single Daddy</div>
@@ -196,7 +219,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d3f289ef9" class="video-card">
-            <img src="https://files.catbox.moe/csm99i.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/csm99i.jpg" class="video-thumb" alt="After Prison, She is... Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">After Prison, She is...</div>
@@ -208,6 +231,3 @@
 
 </body>
 </html>
-
-
-
