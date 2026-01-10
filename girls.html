@@ -5,20 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Girls' Favorites | Kalos TV</title>
     <link rel="icon" type="image/png" href="https://files.catbox.moe/qu3mzn.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://files.catbox.moe" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
     <style>
         /* --- 全局样式 --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Inter', sans-serif;
-            /* 背景：深紫到黑色的渐变，神秘又浪漫 */
+            /* 背景：保持原有的神秘深紫风格 */
             background: linear-gradient(180deg, #240b36 0%, #000000 100%);
             color: #ffffff;
             min-height: 100vh;
             padding: 20px;
+            /* 移动端惯性滚动 */
+            -webkit-overflow-scrolling: touch;
         }
 
         /* --- 顶部导航栏 --- */
@@ -39,16 +49,17 @@
             transition: 0.3s;
             font-weight: 600;
         }
-        .back-btn:hover { color: #ff9eb5; transform: translateX(-5px); }
+        .back-btn:active { opacity: 0.7; transform: scale(0.95); }
         .back-btn i { margin-right: 8px; }
 
         .page-title {
             font-size: 1.2rem;
             font-weight: 800;
-            /* 标题：粉色到金色的渐变 */
             background: linear-gradient(to right, #ff9eb5, #ffdea8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            /* 回退颜色 */
+            color: #ff9eb5;
         }
         
         .spacer { width: 40px; }
@@ -64,22 +75,29 @@
         }
 
         .video-card {
+            display: block; /* 修复 a 标签布局 */
             position: relative;
             width: 100%;
+            /* 4. 宽高比占位：防止加载时页面跳动 */
             aspect-ratio: 3 / 4; 
             border-radius: 16px;
             overflow: hidden;
             background: #222;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            cursor: pointer;
-            transition: transform 0.2s;
-            /* 边框：淡淡的粉色 */
+            text-decoration: none;
             border: 1px solid rgba(255, 158, 181, 0.15);
+            /* 性能优化提示 */
+            will-change: transform;
         }
 
-        .video-card:hover {
-            transform: scale(1.02);
+        .video-card:active {
+            transform: scale(0.98);
             border-color: rgba(255, 158, 181, 0.5);
+        }
+
+        @media (hover: hover) {
+            .video-card:hover { transform: scale(1.02); border-color: rgba(255, 158, 181, 0.5); }
+            .video-card:hover .video-thumb { opacity: 1; }
         }
 
         .video-thumb {
@@ -87,11 +105,10 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.85; 
-            transition: 0.3s;
+            transition: opacity 0.3s ease;
+            background-color: #2a1a35; /* 紫色底，图片加载前显示 */
         }
         
-        .video-card:hover .video-thumb { opacity: 1; }
-
         /* 播放按钮 */
         .play-overlay {
             position: absolute;
@@ -100,12 +117,14 @@
             width: 45px; height: 45px;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid rgba(255,255,255,0.6);
             box-shadow: 0 0 15px rgba(255, 158, 181, 0.3);
+            pointer-events: none;
         }
 
         .play-overlay i { font-size: 16px; color: #fff; margin-left: 3px; }
@@ -116,6 +135,7 @@
             bottom: 0; left: 0; width: 100%;
             padding: 40px 10px 12px;
             background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
+            pointer-events: none;
         }
 
         .card-title {
@@ -130,7 +150,7 @@
 
         .card-tag {
             font-size: 0.7rem;
-            color: #ffc4d6; /* 浅粉色文字 */
+            color: #ffc4d6; 
             display: flex;
             align-items: center;
             font-weight: 600;
@@ -152,7 +172,7 @@
     <div class="grid-container">
 
         <a href="https://short.rollershort.com/api/short/jump/6960d4026c6ca" class="video-card">
-            <img src="https://files.catbox.moe/8r6j0j.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/8r6j0j.jpg" class="video-thumb" alt="Shadows of the Heart Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Shadows of the Heart</div>
@@ -161,7 +181,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d41005026" class="video-card">
-            <img src="https://files.catbox.moe/9gu3ud.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/9gu3ud.jpg" class="video-thumb" alt="Oops, I Love You Cover" width="300" height="400" fetchpriority="high">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Oops, I Love You</div>
@@ -170,7 +190,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d4248271d" class="video-card">
-            <img src="https://files.catbox.moe/gecxrh.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/gecxrh.jpg" class="video-thumb" alt="Cherished by Sweet Daddy Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Cherished by Sweet Daddy</div>
@@ -179,7 +199,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d44774289" class="video-card">
-            <img src="https://files.catbox.moe/ept2qz.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/ept2qz.jpg" class="video-thumb" alt="A Timeless LOVE Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">A Timeless LOVE</div>
@@ -188,7 +208,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d473992a0" class="video-card">
-            <img src="https://files.catbox.moe/6qngdn.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/6qngdn.jpg" class="video-thumb" alt="Beauty's Sharpest Blade Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Beauty's Sharpest Blade</div>
@@ -197,7 +217,7 @@
         </a>
 
         <a href="https://short.rollershort.com/api/short/jump/6960d47f67413" class="video-card">
-            <img src="https://files.catbox.moe/jpryc8.jpg" class="video-thumb" alt="Cover">
+            <img src="https://files.catbox.moe/jpryc8.jpg" class="video-thumb" alt="Kiss Me Under the... Cover" width="300" height="400" loading="lazy">
             <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
             <div class="card-info">
                 <div class="card-title">Kiss Me Under the...</div>
@@ -209,6 +229,3 @@
 
 </body>
 </html>
-
-
-
